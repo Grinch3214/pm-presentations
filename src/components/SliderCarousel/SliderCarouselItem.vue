@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel__item">
+  <div class="carousel__item item" :class="`item--${slide.type}`">
     <!-- TITLE -->
     <h2>{{ slide.title }}</h2>
 
@@ -94,3 +94,12 @@ const props = defineProps<{
   slide: Slide
 }>()
 </script>
+
+<style lang="scss" scoped>
+.item {
+  height: 100%;
+  width: 100%;
+  color: var(--white-color);
+  padding: 20px;
+}
+</style>

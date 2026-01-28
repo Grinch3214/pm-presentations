@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import 'vue3-carousel/carousel.css'
+import { ref } from 'vue'
 import { Carousel, Slide, Pagination } from 'vue3-carousel'
 import { useSlideStore } from '@/stores/slider'
 import SliderCarouselItem from './SliderCarouselItem.vue'
@@ -31,6 +32,12 @@ const carouselConfig = {
   --vc-pgn-width: 20px;
   --vc-pgn-height: 20px;
   --vc-pgn-border-radius: 50%;
+
+  &__viewport {
+    background:
+      linear-gradient(to top, rgba(0, 55, 138, 0.7), rgb(0 0 0 / 0.8)),
+      url('/src/assets/img/offline-homepage-splash-1680@2x.webp') no-repeat center/cover;
+  }
 
   &__pagination {
     align-items: center;
@@ -54,6 +61,8 @@ const carouselConfig = {
       }
 
       &--active {
+        background: var(--secondary-brand-color);
+
         &::before {
           transform: translate(-50%, -50%) scale(1.5);
         }

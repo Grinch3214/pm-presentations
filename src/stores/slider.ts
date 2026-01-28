@@ -1,8 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import type { Slide } from '../types/slider'
 
 export const useSlideStore = defineStore('slideStore', () => {
-  const slides = ref([
+  const slides = ref<Slide[]>([
     {
       id: 1,
       title: 'Фронтенд для проджект менеджерів',

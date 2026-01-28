@@ -5,7 +5,6 @@
     </Slide>
 
     <template #addons>
-      <Navigation />
       <Pagination />
     </template>
   </Carousel>
@@ -13,14 +12,58 @@
 
 <script setup lang="ts">
 import 'vue3-carousel/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import { Carousel, Slide, Pagination } from 'vue3-carousel'
 import { useSlideStore } from '@/stores/slider'
 import SliderCarouselItem from './SliderCarouselItem.vue'
 
 const slideStore = useSlideStore()
 
 const carouselConfig = {
-  itemsToShow: 2.5,
-  wrapAround: true,
-}
+  dir: 'ttb',
+  itemsToShow: 1,
+  mouseWheel: true,
+  height: '100vh',
+} as const
 </script>
+
+<style lang="scss">
+.carousel {
+  --vc-pgn-width: 20px;
+  --vc-pgn-height: 20px;
+  --vc-pgn-border-radius: 50%;
+
+  &__pagination {
+    align-items: center;
+    counter-reset: slider;
+  }
+
+  &__pagination-item {
+    & > .carousel__pagination-button {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        counter-increment: slider;
+        content: counter(slider);
+        color: var(--white-color);
+        font-size: 12px;
+        pointer-events: none;
+      }
+
+      &--active {
+        &::before {
+          transform: translate(-50%, -50%) scale(1.5);
+        }
+      }
+    }
+  }
+
+  &__pagination-button--active {
+    --vc-pgn-width: 30px;
+    --vc-pgn-height: 30px;
+  }
+}
+</style>

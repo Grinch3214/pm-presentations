@@ -1,13 +1,9 @@
 <script setup lang="ts">
-// import HelloWorld from './components/HelloWorld.vue'
+import SlidersCarousel from './components/SliderCarousel//SliderCarouselWrapper.vue'
 </script>
 
 <template>
-  <header></header>
-
   <main>
-    <!-- <TheWelcome /> -->
+    <SlidersCarousel />
   </main>
 </template>
-
-<style scoped></style>

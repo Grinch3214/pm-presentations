@@ -1,16 +1,11 @@
 <template>
-  <div class="carousel__item item" :class="`item--${slide.type}`">
+  <div class="carousel__item item" :class="classList">
     <!-- TITLE -->
-    <h2>{{ slide.title }}</h2>
+    <h2 class="item__title">{{ slide.title }}</h2>
 
     <!-- SUBTITLE -->
-    <p v-if="slide.subtitle">
+    <p class="item__subtitle" v-if="slide.subtitle">
       {{ slide.subtitle }}
-    </p>
-
-    <!-- NOTE -->
-    <p v-if="slide.note">
-      {{ slide.note }}
     </p>
 
     <!-- RESULT -->
@@ -24,6 +19,11 @@
         {{ item }}
       </li>
     </ul>
+
+    <!-- NOTE -->
+    <p v-if="slide.note">
+      {{ slide.note }}
+    </p>
 
     <!-- CHECKLIST -->
     <ul v-if="slide.checklist">
@@ -89,10 +89,16 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Slide } from '@/types/slider'
+
 const props = defineProps<{
   slide: Slide
 }>()
+
+const classList = computed(() => {
+  return `item-${props.slide.type} item--${props.slide.id}`
+})
 </script>
 
 <style lang="scss" scoped>
@@ -101,5 +107,22 @@ const props = defineProps<{
   width: 100%;
   color: var(--white-color);
   padding: 20px;
+  display: grid;
+  place-content: center;
+  gap: 20px;
+  text-align: center;
+
+  &--title {
+  }
+
+  &__title,
+  &__subtitle {
+    font-size: 50px;
+    font-weight: 700;
+  }
+
+  &__subtitle {
+    font-size: 36px;
+  }
 }
 </style>

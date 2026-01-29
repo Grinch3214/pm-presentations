@@ -26,6 +26,8 @@ export interface Slide {
   result?: string
 
   case?: SlideCase
+
+  examples?: string[]
 }
 
 export interface SlideStore {

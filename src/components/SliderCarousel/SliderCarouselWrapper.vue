@@ -6,10 +6,9 @@
 
     <template #addons>
       <div class="custom-progress"></div>
+      <div class="custom-count">{{ currentSlideIndex + 1 }} / {{ slideStore.totalSlides }}</div>
     </template>
   </Carousel>
-
-  <div class="custom-count">{{ currentSlideIndex + 1 }} / {{ slideStore.totalSlides }}</div>
 </template>
 
 <script setup lang="ts">
@@ -73,7 +72,6 @@ function handleSlideStart(data: CarouselData) {
 
 .custom-count {
   position: absolute;
-  z-index: 1;
   min-width: 310px;
   bottom: 20px;
   left: 40px;

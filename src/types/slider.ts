@@ -39,6 +39,7 @@ export interface Slide {
   note?: string
   result?: string
   examples?: string[]
+  exampleItem?: string
 
   case?: CaseStudy
   example?: Example

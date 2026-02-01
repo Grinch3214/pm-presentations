@@ -63,7 +63,7 @@ function handleSlideStart(data: CarouselData) {
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--white-color);
+    background: var(--secondary-brand-color);
     transform-origin: bottom;
     transform: scaleY(calc(var(--progress, 0) / 100));
     transition: transform 0.4s ease;

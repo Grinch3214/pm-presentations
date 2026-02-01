@@ -130,6 +130,10 @@
           </template>
         </div>
 
+        <template v-if="slide.exampleItem === 'button'">
+          <button class="slide__example-button">Example</button>
+        </template>
+
         <div class="slide__example-conclusion">
           <strong class="slide__example-strong">✨ Висновок:</strong>
           <p class="slide__example-desc">{{ slide.example.conclusion }}</p>
@@ -210,16 +214,45 @@ const classList = computed(() => {
 .subtitle {
   font-size: 40px;
   font-weight: 700;
+  text-shadow: 0px 1px 8px var(--secondary-brand-color);
 }
 .bullets {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  font-size: 24px;
+
   &__item {
+    position: relative;
+    text-shadow: 0px 1px 8px var(--brand-color);
+    padding-left: 20px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--secondary-brand-color);
+      box-shadow: 0 0 8px 0 var(--black-color);
+      border-radius: 50%;
+    }
   }
 }
 .examples {
   &__item {
+    color: var(--cyan-color);
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0px 1px 8px var(--black-color);
   }
 }
-.note {
+.note,
+.result {
+  color: var(--orange-color);
+  text-shadow: 0px 1px 8px var(--black-color);
+  font-weight: 700;
 }
 
 .result {
@@ -227,6 +260,13 @@ const classList = computed(() => {
   }
 }
 .divider {
+  width: 100%;
+  height: 2px;
+  border-color: var(--secondary-brand-color);
+}
+.slide--28 {
+  --content-state: none;
+  --item-padding-state: 0px;
 }
 
 .slide {
@@ -239,17 +279,23 @@ const classList = computed(() => {
   gap: 20px;
   text-align: center;
 
-  &__page {
+  &__page,
+  &__content,
+  &__warning,
+  &__example,
+  &__summary {
     display: grid;
-    gap: 20px;
+    gap: 26px;
   }
 
   &__page-title {
     font-size: 60px;
     font-weight: 700;
+    text-shadow: 0px 1px 8px var(--brand-color);
   }
 
   &__page-subtitle {
+    text-shadow: 0px 1px 8px var(--brand-color);
   }
 
   &__content {
@@ -336,28 +382,96 @@ const classList = computed(() => {
   &__example-subtitle {
   }
 
+  &__example-header,
+  &__example-items,
+  &__example-conclusion {
+    display: grid;
+    gap: 6px;
+  }
+
   &__example-header {
+    text-shadow: 0px 1px 8px var(--orange-color);
   }
 
   &__example-title {
+    font-size: 30px;
   }
 
   &__example-description {
+    font-size: 24px;
   }
 
   &__example-items {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    font-size: 24px;
   }
 
   &__example-item {
+    position: relative;
+    text-shadow: 0px 1px 8px var(--brand-color);
+    padding-left: var(--item-padding-state, 20px);
+
+    &::before {
+      content: var(--content-state, '');
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--orange-color);
+      box-shadow: 0 0 8px 0 var(--black-color);
+      border-radius: 50%;
+    }
   }
 
   &__example-conclusion {
   }
 
   &__example-strong {
+    font-size: 30px;
+    text-shadow: 0 0 8px var(--black-color);
   }
 
   &__example-desc {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--orange-color);
+    text-shadow: 0 0 8px var(--black-color);
+  }
+
+  &__example-button {
+    justify-self: center;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 45px;
+    border-radius: 6px;
+    color: var(--secondary-brand-color);
+    background: var(--black-color);
+    outline: 0;
+    transition: 0.3s ease;
+
+    &:hover:not(:disabled) {
+      --secondary-brand-color: #53b90f;
+      --black-color: rgb(0, 13, 34);
+    }
+
+    &:active:not(:disabled) {
+      --secondary-brand-color: var(--orange-color);
+
+      transform: scale(0.98);
+    }
+
+    &:focus:not(:disabled) {
+      box-shadow: 0 0 0 2px var(--secondary-brand-color);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
   }
 
   &__checklist {

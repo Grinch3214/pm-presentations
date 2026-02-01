@@ -79,7 +79,7 @@ function handleSlideStart(data: CarouselData) {
   font-weight: 700;
   color: var(--white-color);
   pointer-events: none;
-  opacity: 0.1;
+  opacity: 0.2;
   text-align: end;
 }
 </style>

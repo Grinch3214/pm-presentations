@@ -107,7 +107,7 @@
         </div>
 
         <div v-if="slide.case.lesson" class="slide__case-lesson">
-          <strong class="slide__case-strong">🎯 Урок:</strong>
+          <strong class="slide__case-strong">🎯 Висновок:</strong>
           <p class="slide__case-desc">{{ slide.case.lesson }}</p>
         </div>
       </div>
@@ -147,8 +147,7 @@
         <h2 class="slide__checklist-subtitle subtitle">✅ {{ slide.title }}</h2>
         <ul class="slide__checklist-list">
           <li v-for="(item, index) in slide.checklist" :key="index" class="slide__checklist-item">
-            <input type="checkbox" :id="`check-${slide.id}-${index}`" />
-            <label :for="`check-${slide.id}-${index}`">{{ item }}</label>
+            {{ item }}
           </li>
         </ul>
         <div v-if="slide.note" class="slide__checklist-note note">💡 {{ slide.note }}</div>
@@ -178,7 +177,7 @@
             v-for="(resource, index) in slide.resources"
             :key="index"
           >
-            {{ resource }}
+            <span v-html="resource"></span>
           </li>
         </ul>
       </div>
@@ -225,10 +224,10 @@ const classList = computed(() => {
   &__item {
     position: relative;
     text-shadow: 0px 1px 8px var(--brand-color);
-    padding-left: 20px;
+    padding-left: var(--item-padding-state, 20px);
 
     &::before {
-      content: '';
+      content: var(--content-state, '');
       position: absolute;
       top: 7px;
       left: 0;
@@ -264,9 +263,12 @@ const classList = computed(() => {
   height: 2px;
   border-color: var(--secondary-brand-color);
 }
-.slide--28 {
+.slide--28,
+.slide--40,
+.slide--41 {
   --content-state: none;
   --item-padding-state: 0px;
+  --error-color: var(--red-color);
 }
 
 .slide {
@@ -283,7 +285,9 @@ const classList = computed(() => {
   &__content,
   &__warning,
   &__example,
-  &__summary {
+  &__summary,
+  &__case,
+  &__checklist {
     display: grid;
     gap: 26px;
   }
@@ -334,22 +338,56 @@ const classList = computed(() => {
   &__case-subtitle {
   }
 
-  &__case-situation {
+  &__case-situation,
+  &__case-reality,
+  &__case-conclusion,
+  &__case-consequences,
+  &__case-lesson,
+  &__case-problem,
+  &__case-question,
+  &__case-outcome {
+    display: grid;
+    gap: 10px;
+    text-shadow: 0 0 8px var(--brand-color);
   }
 
   &__case-strong {
+    text-shadow: 0px 1px 8px var(--red-color);
+    font-size: 30px;
+    font-weight: 700;
   }
 
   &__case-desc {
+    font-weight: 700;
+    color: var(--orange-color);
   }
 
   &__case-reality {
   }
 
-  &__case-list {
+  &__case-list,
+  &__checklist-list {
+    display: grid;
+    gap: 6px;
+    font-size: 24px;
   }
 
   &__case-item {
+    padding-left: 25px;
+    position: relative;
+    justify-self: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      transform: rotate(45deg);
+      background: var(--cyan-color);
+      box-shadow: 0 0 4px 0 var(--brand-color);
+    }
   }
 
   &__case-consequences {
@@ -412,6 +450,11 @@ const classList = computed(() => {
     position: relative;
     text-shadow: 0px 1px 8px var(--brand-color);
     padding-left: var(--item-padding-state, 20px);
+
+    &:nth-of-type(1),
+    &:nth-of-type(3) {
+      color: var(--error-color);
+    }
 
     &::before {
       content: var(--content-state, '');

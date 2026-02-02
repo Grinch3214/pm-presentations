@@ -1,36 +1,53 @@
-import type { Ref } from 'vue'
+export type SlideType =
+  | 'title'
+  | 'content'
+  | 'warning'
+  | 'case'
+  | 'example'
+  | 'checklist'
+  | 'summary'
+  | 'resources'
+  | 'final'
 
-export type SlideType = 'title' | 'content' | 'warning' | 'case' | 'checklist' | 'summary'
-
-export interface SlideCase {
+export interface CaseStudy {
   situation: string
   reality?: string[]
   consequences?: string[]
-  conclusion?: string
-  lesson?: string
   problem?: string
   question?: string
+  conclusion?: string
+  lesson?: string
+  badResponse?: string
+  goodResponse?: string
+  outcome?: string[]
+}
+
+export interface Example {
+  title: string
+  description: string
+  items: string[]
+  conclusion: string
 }
 
 export interface Slide {
   id: number
   title: string
+  subtitle?: string
   type: SlideType
 
-  subtitle?: string
-
   bullets?: string[]
-  checklist?: string[]
-
   note?: string
   result?: string
-
-  case?: SlideCase
-
   examples?: string[]
+  exampleItem?: string
+
+  case?: CaseStudy
+  example?: Example
+  checklist?: string[]
+  resources?: string[]
 }
 
 export interface SlideStore {
-  slides: Ref<Slide[]>
+  slides: Slide[]
   totalSlides: number
 }

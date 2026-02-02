@@ -1,90 +1,198 @@
 <template>
-  <div class="carousel__item item" :class="classList">
-    <!-- TITLE -->
-    <h2 class="item__title">{{ slide.title }}</h2>
-
-    <!-- SUBTITLE -->
-    <p class="item__subtitle" v-if="slide.subtitle">
-      {{ slide.subtitle }}
-    </p>
-
-    <!-- RESULT -->
-    <p v-if="slide.result">
-      {{ slide.result }}
-    </p>
-
-    <!-- BULLETS -->
-    <ul v-if="slide.bullets">
-      <li v-for="(item, index) in slide.bullets" :key="index">
-        {{ item }}
-      </li>
-    </ul>
-
-    <!-- NOTE -->
-    <p v-if="slide.note">
-      {{ slide.note }}
-    </p>
-
-    <!-- CHECKLIST -->
-    <ul v-if="slide.checklist">
-      <li v-for="(item, index) in slide.checklist" :key="index">
-        <input type="checkbox" disabled />
-        {{ item }}
-      </li>
-    </ul>
-
-    <!-- CASE BLOCK -->
-    <div v-if="slide.case">
-      <!-- Situation -->
-      <div v-if="slide.case.situation">
-        <strong>Ситуація:</strong>
-        <p>{{ slide.case.situation }}</p>
+  <div class="slide" :class="classList">
+    <!-- Title slide -->
+    <template v-if="slide.type === 'title'">
+      <div class="slide__page">
+        <h1 class="slide__page-title">{{ slide.title }}</h1>
+        <h2 class="slide__page-subtitle subtitle" v-if="slide.subtitle">{{ slide.subtitle }}</h2>
       </div>
+    </template>
 
-      <!-- Reality -->
-      <div v-if="slide.case.reality">
-        <strong>Реальність:</strong>
-        <ul>
-          <li v-for="(item, index) in slide.case.reality" :key="index">
+    <!-- Content slide -->
+    <template v-else-if="slide.type === 'content'">
+      <div class="slide__content">
+        <h2 class="slide__content-subtitle subtitle">{{ slide.title }}</h2>
+        <ul v-if="slide.bullets" class="slide__content-bullets bullets">
+          <li class="bullets__item" v-for="(bullet, index) in slide.bullets" :key="index">
+            {{ bullet }}
+          </li>
+        </ul>
+        <div v-if="slide.examples" class="slide__content-examples examples">
+          <p v-for="(example, index) in slide.examples" :key="index" class="examples__item">
+            {{ example }}
+          </p>
+        </div>
+        <div v-if="slide.note" class="slide__content-note note">💡 {{ slide.note }}</div>
+      </div>
+    </template>
+
+    <!-- Warning slide -->
+    <template v-else-if="slide.type === 'warning'">
+      <div class="slide__warning">
+        <h2 class="slide__warning-subtitle subtitle">⚠️ {{ slide.title }}</h2>
+        <ul v-if="slide.bullets" class="slide__warning-bullets bullets">
+          <li class="bullets__item" v-for="(bullet, index) in slide.bullets" :key="index">
+            {{ bullet }}
+          </li>
+        </ul>
+        <div v-if="slide.result" class="slide__warning-result result">
+          <strong class="result__strong">⚡ Наслідок:</strong> {{ slide.result }}
+        </div>
+        <div v-if="slide.note" class="slide__warning-note note">💡 {{ slide.note }}</div>
+      </div>
+    </template>
+
+    <!-- Case study slide -->
+    <template v-else-if="slide.type === 'case' && slide.case">
+      <div class="slide__case">
+        <h2 class="slide__case-subtitle subtitle">📖 {{ slide.title }}</h2>
+
+        <div class="slide__case-situation">
+          <strong class="slide__case-strong">Ситуація:</strong>
+          <p class="slide__case-desc">{{ slide.case.situation }}</p>
+        </div>
+
+        <div v-if="slide.case.reality" class="slide__case-reality">
+          <strong class="slide__case-strong">Реальність:</strong>
+          <ul class="slide__case-list">
+            <li class="slide__case-item" v-for="(item, index) in slide.case.reality" :key="index">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="slide.case.consequences" class="slide__case-consequences">
+          <strong class="slide__case-strong">Наслідки:</strong>
+          <ul class="slide__case-list">
+            <li
+              class="slide__case-item"
+              v-for="(item, index) in slide.case.consequences"
+              :key="index"
+            >
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="slide.case.problem" class="slide__case-problem">
+          <strong class="slide__case-strong">Проблема:</strong>
+          <p class="slide__case-desc">{{ slide.case.problem }}</p>
+        </div>
+
+        <div v-if="slide.case.question" class="slide__case-question">
+          <strong class="slide__case-strong">Питання:</strong>
+          <p class="slide__case-desc">{{ slide.case.question }}</p>
+        </div>
+
+        <div v-if="slide.case.badResponse" class="slide__case-bad-response">
+          <p class="slide__case-desc">{{ slide.case.badResponse }}</p>
+        </div>
+
+        <div v-if="slide.case.goodResponse" class="slide__case-good-response">
+          <p class="slide__case-desc">{{ slide.case.goodResponse }}</p>
+        </div>
+
+        <div v-if="slide.case.outcome" class="slide__case-outcome">
+          <strong class="slide__case-strong">Результат:</strong>
+          <ul class="slide__case-list">
+            <li class="slide__case-item" v-for="(item, index) in slide.case.outcome" :key="index">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="slide.case.conclusion" class="slide__case-conclusion">
+          <strong class="slide__case-strong">💡 Висновок:</strong>
+          <p class="slide__case-desc">{{ slide.case.conclusion }}</p>
+        </div>
+
+        <div v-if="slide.case.lesson" class="slide__case-lesson">
+          <strong class="slide__case-strong">🎯 Висновок:</strong>
+          <p class="slide__case-desc">{{ slide.case.lesson }}</p>
+        </div>
+      </div>
+    </template>
+
+    <!-- Example slide -->
+    <template v-else-if="slide.type === 'example' && slide.example">
+      <div class="slide__example">
+        <h2 class="slide__example-subtitle subtitle">💡 {{ slide.title }}</h2>
+
+        <div class="slide__example-header">
+          <h3 class="slide__example-title">{{ slide.example.title }}</h3>
+          <p class="slide__example-description">{{ slide.example.description }}</p>
+        </div>
+
+        <div class="slide__example-items">
+          <template v-for="(item, index) in slide.example.items" :key="index">
+            <hr v-if="item === '---'" class="divider" />
+            <p v-else class="slide__example-item">{{ item }}</p>
+          </template>
+        </div>
+
+        <template v-if="slide.exampleItem === 'button'">
+          <button class="slide__example-button">Example</button>
+        </template>
+
+        <div class="slide__example-conclusion">
+          <strong class="slide__example-strong">✨ Висновок:</strong>
+          <p class="slide__example-desc">{{ slide.example.conclusion }}</p>
+        </div>
+      </div>
+    </template>
+
+    <!-- Checklist slide -->
+    <template v-else-if="slide.type === 'checklist'">
+      <div class="slide__checklist">
+        <h2 class="slide__checklist-subtitle subtitle">✅ {{ slide.title }}</h2>
+        <ul class="slide__checklist-list">
+          <li v-for="(item, index) in slide.checklist" :key="index" class="slide__checklist-item">
             {{ item }}
           </li>
         </ul>
+        <div v-if="slide.note" class="slide__checklist-note note">💡 {{ slide.note }}</div>
       </div>
+    </template>
 
-      <!-- Consequences -->
-      <div v-if="slide.case.consequences">
-        <strong>Наслідки:</strong>
-        <ul>
-          <li v-for="(item, index) in slide.case.consequences" :key="index">
-            {{ item }}
+    <!-- Summary slide -->
+    <template v-else-if="slide.type === 'summary'">
+      <div class="slide__summary">
+        <h2 class="slide__summary-subtitle subtitle">🎯 {{ slide.title }}</h2>
+        <ul v-if="slide.bullets" class="bullets slide__summary-bullets">
+          <li class="bullets__item" v-for="(bullet, index) in slide.bullets" :key="index">
+            {{ bullet }}
+          </li>
+        </ul>
+        <div v-if="slide.note" class="note slide__summary-note">💡 {{ slide.note }}</div>
+      </div>
+    </template>
+
+    <!-- Resources slide -->
+    <template v-else-if="slide.type === 'resources'">
+      <div class="slide__resources">
+        <h2 class="slide__resources-subtitle subtitle">📚 {{ slide.title }}</h2>
+        <ul class="slide__resources-list">
+          <li
+            class="slide__resources-item"
+            v-for="(resource, index) in slide.resources"
+            :key="index"
+          >
+            <span v-html="resource"></span>
           </li>
         </ul>
       </div>
+    </template>
 
-      <!-- Conclusion -->
-      <div v-if="slide.case.conclusion">
-        <strong>Висновок:</strong>
-        <p>{{ slide.case.conclusion }}</p>
+    <!-- Final slide -->
+    <template v-else-if="slide.type === 'final'">
+      <div class="slide__final">
+        <h1 class="slide__final-title">{{ slide.title }}</h1>
+        <h2 class="slide__final-subtitle subtitle" v-if="slide.subtitle">{{ slide.subtitle }}</h2>
+        <div v-if="slide.note" class="slide__final-note note">
+          {{ slide.note }}
+        </div>
       </div>
-
-      <!-- Lesson -->
-      <div v-if="slide.case.lesson">
-        <strong>Урок:</strong>
-        <p>{{ slide.case.lesson }}</p>
-      </div>
-
-      <!-- Problem -->
-      <div v-if="slide.case.problem">
-        <strong>Проблема:</strong>
-        <p>{{ slide.case.problem }}</p>
-      </div>
-
-      <!-- Question -->
-      <div v-if="slide.case.question">
-        <strong>Питання:</strong>
-        <p>{{ slide.case.question }}</p>
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -97,32 +205,367 @@ const props = defineProps<{
 }>()
 
 const classList = computed(() => {
-  return `item-${props.slide.type} item--${props.slide.id}`
+  return `slide-type-${props.slide.type} slide--${props.slide.id}`
 })
 </script>
 
 <style lang="scss" scoped>
-.item {
+.subtitle {
+  font-size: 40px;
+  font-weight: 700;
+  text-shadow: 0px 1px 8px var(--secondary-brand-color);
+}
+.bullets {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  font-size: 24px;
+
+  &__item {
+    position: relative;
+    text-shadow: 0px 1px 8px var(--brand-color);
+    padding-left: var(--item-padding-state, 20px);
+
+    &::before {
+      content: var(--content-state, '');
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--secondary-brand-color);
+      box-shadow: 0 0 8px 0 var(--black-color);
+      border-radius: 50%;
+    }
+  }
+}
+.examples {
+  &__item {
+    color: var(--cyan-color);
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0px 1px 8px var(--black-color);
+  }
+}
+.note,
+.result {
+  color: var(--orange-color);
+  text-shadow: 0px 1px 8px var(--black-color);
+  font-weight: 700;
+}
+
+.result {
+  &__strong {
+  }
+}
+.divider {
+  width: 100%;
+  height: 2px;
+  border-color: var(--secondary-brand-color);
+}
+.slide--28,
+.slide--40,
+.slide--41 {
+  --content-state: none;
+  --item-padding-state: 0px;
+  --error-color: var(--red-color);
+}
+
+.slide {
   height: 100%;
   width: 100%;
   color: var(--white-color);
-  padding: 20px;
+  padding: 20px 40px;
   display: grid;
   place-content: center;
   gap: 20px;
   text-align: center;
 
-  &--title {
+  &__page,
+  &__content,
+  &__warning,
+  &__example,
+  &__summary,
+  &__case,
+  &__checklist {
+    display: grid;
+    gap: 26px;
   }
 
-  &__title,
-  &__subtitle {
-    font-size: 50px;
+  &__page-title {
+    font-size: 60px;
+    font-weight: 700;
+    text-shadow: 0px 1px 8px var(--brand-color);
+  }
+
+  &__page-subtitle {
+    text-shadow: 0px 1px 8px var(--brand-color);
+  }
+
+  &__content {
+  }
+
+  &__content-subtitle {
+  }
+
+  &__content-bullets {
+  }
+
+  &__content-examples {
+  }
+
+  &__content-note {
+  }
+
+  &__warning {
+  }
+
+  &__warning-subtitle {
+  }
+
+  &__warning-bullets {
+  }
+
+  &__warning-result {
+  }
+
+  &__warning-note {
+  }
+
+  &__case {
+  }
+
+  &__case-subtitle {
+  }
+
+  &__case-situation,
+  &__case-reality,
+  &__case-conclusion,
+  &__case-consequences,
+  &__case-lesson,
+  &__case-problem,
+  &__case-question,
+  &__case-outcome {
+    display: grid;
+    gap: 10px;
+    text-shadow: 0 0 8px var(--brand-color);
+  }
+
+  &__case-strong {
+    text-shadow: 0px 1px 8px var(--red-color);
+    font-size: 30px;
     font-weight: 700;
   }
 
-  &__subtitle {
-    font-size: 36px;
+  &__case-desc {
+    font-weight: 700;
+    color: var(--orange-color);
+  }
+
+  &__case-reality {
+  }
+
+  &__case-list,
+  &__checklist-list {
+    display: grid;
+    gap: 6px;
+    font-size: 24px;
+  }
+
+  &__case-item {
+    padding-left: 25px;
+    position: relative;
+    justify-self: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      transform: rotate(45deg);
+      background: var(--cyan-color);
+      box-shadow: 0 0 4px 0 var(--brand-color);
+    }
+  }
+
+  &__case-consequences {
+  }
+
+  &__case-problem {
+  }
+
+  &__case-question {
+  }
+
+  &__case-bad-response {
+  }
+
+  &__case-good-response {
+  }
+
+  &__case-outcome {
+  }
+
+  &__case-conclusion {
+  }
+
+  &__case-lesson {
+  }
+
+  &__example {
+  }
+
+  &__example-subtitle {
+  }
+
+  &__example-header,
+  &__example-items,
+  &__example-conclusion {
+    display: grid;
+    gap: 6px;
+  }
+
+  &__example-header {
+    text-shadow: 0px 1px 8px var(--orange-color);
+  }
+
+  &__example-title {
+    font-size: 30px;
+  }
+
+  &__example-description {
+    font-size: 24px;
+  }
+
+  &__example-items {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    font-size: 24px;
+  }
+
+  &__example-item {
+    position: relative;
+    text-shadow: 0px 1px 8px var(--brand-color);
+    padding-left: var(--item-padding-state, 20px);
+
+    &:nth-of-type(1),
+    &:nth-of-type(3) {
+      color: var(--error-color);
+    }
+
+    &::before {
+      content: var(--content-state, '');
+      position: absolute;
+      top: 7px;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--orange-color);
+      box-shadow: 0 0 8px 0 var(--black-color);
+      border-radius: 50%;
+    }
+  }
+
+  &__example-conclusion {
+  }
+
+  &__example-strong {
+    font-size: 30px;
+    text-shadow: 0 0 8px var(--black-color);
+  }
+
+  &__example-desc {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--orange-color);
+    text-shadow: 0 0 8px var(--black-color);
+  }
+
+  &__example-button {
+    justify-self: center;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 45px;
+    border-radius: 6px;
+    color: var(--secondary-brand-color);
+    background: var(--black-color);
+    outline: 0;
+    transition: 0.3s ease;
+
+    &:hover:not(:disabled) {
+      --secondary-brand-color: #53b90f;
+      --black-color: rgb(0, 13, 34);
+    }
+
+    &:active:not(:disabled) {
+      --secondary-brand-color: var(--orange-color);
+
+      transform: scale(0.98);
+    }
+
+    &:focus:not(:disabled) {
+      box-shadow: 0 0 0 2px var(--secondary-brand-color);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__checklist {
+  }
+
+  &__checklist-subtitle {
+  }
+
+  &__checklist-list {
+  }
+
+  &__checklist-item {
+  }
+
+  &__checklist-note {
+  }
+
+  &__summary {
+  }
+
+  &__summary-subtitle {
+  }
+
+  &__summary-bullets {
+  }
+
+  &__summary-note {
+  }
+
+  &__resources {
+  }
+
+  &__resources-subtitle {
+  }
+
+  &__resources-list {
+  }
+
+  &__resources-item {
+  }
+
+  &__final {
+  }
+
+  &__final-title {
+  }
+
+  &__final-subtitle {
+  }
+
+  &__final-note {
   }
 }
 </style>

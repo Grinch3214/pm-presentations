@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import 'vue3-carousel/carousel.css'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Carousel, Slide } from 'vue3-carousel'
 import { useSlideStore } from '@/stores/slider'
 import SliderCarouselItem from './SliderCarouselItem.vue'
@@ -27,23 +27,57 @@ interface CarouselData {
 
 const slideStore = useSlideStore()
 
+const STORAGE_KEY = 'carousel-current-slide' as string
+
+const currentSlideIndex = ref<number>(loadSavedSlideIndex())
+
 const carouselConfig = {
   dir: 'ttb',
   itemsToShow: 1,
   mouseWheel: true,
   height: '100vh',
+  modelValue: currentSlideIndex.value,
 } as const
 
-const currentSlideIndex = ref<number>(0)
+function loadSavedSlideIndex(): number {
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY)
+    if (saved !== null) {
+      const index = parseInt(saved, 10)
+      if (!isNaN(index) && index >= 0 && index < slideStore.totalSlides) {
+        return index
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+  return 0
+}
+
+function saveSlideIndex(index: number): void {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, index.toString())
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 function handleSlideStart(data: CarouselData) {
   currentSlideIndex.value = data.slidingToIndex
+
+  saveSlideIndex(currentSlideIndex.value)
 
   const total = slideStore.totalSlides
   const progress = total <= 1 ? 0 : (currentSlideIndex.value / (total - 1)) * 100
 
   document.documentElement.style.setProperty('--progress', progress.toFixed(2))
 }
+
+onMounted(() => {
+  const total = slideStore.totalSlides
+  const progress = total <= 1 ? 0 : (currentSlideIndex.value / (total - 1)) * 100
+  document.documentElement.style.setProperty('--progress', progress.toFixed(2))
+})
 </script>
 
 <style lang="scss" scoped>

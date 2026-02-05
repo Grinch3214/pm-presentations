@@ -2,50 +2,54 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+#app {
+  position: relative;
+}
+
 .carousel {
   --vc-pgn-width: 20px;
   --vc-pgn-height: 20px;
   --vc-pgn-border-radius: 50%;
 
   &__viewport {
-    background:
-      linear-gradient(to top, rgba(0, 55, 138, 0.7), rgb(0 0 0 / 0.8)),
-      url('/src/assets/img/offline-homepage-splash-1680@2x.webp') no-repeat center/cover;
+    // background:
+    //   linear-gradient(to top, rgba(0, 55, 138, 0.7), rgb(0 0 0 / 0.8)),
+    //   url('/src/assets/img/offline-homepage-splash-1680@2x.webp') no-repeat center/cover;
   }
 
-  &__pagination {
-    align-items: center;
-    counter-reset: slider;
-  }
+  // &__pagination {
+  //   align-items: center;
+  //   counter-reset: slider;
+  // }
 
-  &__pagination-item {
-    & > .carousel__pagination-button {
-      position: relative;
+  // &__pagination-item {
+  //   & > .carousel__pagination-button {
+  //     position: relative;
 
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        counter-increment: slider;
-        content: counter(slider);
-        color: var(--white-color);
-        font-size: 12px;
-        pointer-events: none;
-      }
+  //     &::before {
+  //       position: absolute;
+  //       top: 50%;
+  //       left: 50%;
+  //       transform: translate(-50%, -50%);
+  //       counter-increment: slider;
+  //       content: counter(slider);
+  //       color: var(--white-color);
+  //       font-size: 12px;
+  //       pointer-events: none;
+  //     }
 
-      &--active {
-        background: var(--secondary-brand-color);
+  //     &--active {
+  //       background: var(--secondary-brand-color);
 
-        &::before {
-          transform: translate(-50%, -50%) scale(1.5);
-        }
-      }
-    }
-  }
+  //       &::before {
+  //         transform: translate(-50%, -50%) scale(1.5);
+  //       }
+  //     }
+  //   }
+  // }
 
-  &__pagination-button--active {
-    --vc-pgn-width: 30px;
-    --vc-pgn-height: 30px;
-  }
+  // &__pagination-button--active {
+  //   --vc-pgn-width: 30px;
+  //   --vc-pgn-height: 30px;
+  // }
 }

@@ -81,6 +81,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '/src/assets/scss/_vars.scss' as v;
+
 .custom-progress {
   position: absolute;
   right: 12px;
@@ -106,14 +108,21 @@ onMounted(() => {
 
 .custom-count {
   position: absolute;
-  min-width: 310px;
-  bottom: 20px;
-  left: 40px;
-  font-size: 100px;
+  bottom: 10px;
+  left: 20px;
+  min-width: 160px;
+  font-size: 50px;
   font-weight: 700;
   color: var(--white-color);
   pointer-events: none;
   opacity: 0.2;
   text-align: end;
+
+  @include v.bp1200 {
+    font-size: 100px;
+    min-width: 310px;
+    left: 40px;
+    bottom: 20px;
+  }
 }
 </style>

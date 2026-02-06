@@ -7,3 +7,18 @@
   --orange-color: rgb(254, 172, 48);
   --red-color: rgb(227, 60, 57);
 }
+
+$breakpoint-sm: 992px;
+$breakpoint-md: 1200px;
+
+@mixin bp992 {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin bp1200 {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}

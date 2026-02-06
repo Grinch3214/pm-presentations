@@ -1,13 +1,31 @@
+@use 'vars' as v;
+
 .subtitle {
-  font-size: 40px;
+  font-size: 20px;
   font-weight: 700;
   text-shadow: 0px 1px 8px var(--secondary-brand-color);
+
+  @include v.bp992 {
+    font-size: 30px;
+  }
+
+  @include v.bp1200 {
+    font-size: 40px;
+  }
 }
 .bullets {
   display: grid;
   justify-items: center;
   gap: 10px;
-  font-size: 24px;
+  font-size: 14px;
+
+  @include v.bp992 {
+    font-size: 20px;
+  }
+
+  @include v.bp1200 {
+    font-size: 24px;
+  }
 
   &__item {
     position: relative;
@@ -30,9 +48,17 @@
 .examples {
   &__item {
     color: var(--cyan-color);
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 700;
     text-shadow: 0px 1px 8px var(--black-color);
+
+    @include v.bp992 {
+      font-size: 18px;
+    }
+
+    @include v.bp1200 {
+      font-size: 20px;
+    }
   }
 }
 .note,
@@ -59,11 +85,16 @@
   height: 100%;
   width: 100%;
   color: var(--white-color);
-  padding: 20px 40px;
+  padding: 15px;
   display: grid;
   place-content: center;
-  gap: 20px;
+  gap: 10px;
   text-align: center;
+
+  @include v.bp992 {
+    padding: 20px 40px;
+    gap: 20px;
+  }
 
   &__page,
   &__content,
@@ -74,13 +105,29 @@
   &__checklist,
   &__resources {
     display: grid;
-    gap: 26px;
+    gap: 14px;
+
+    @include v.bp992 {
+      gap: 22px;
+    }
+
+    @include v.bp1200 {
+      gap: 26px;
+    }
   }
 
   &__page-title {
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 700;
     text-shadow: 0px 1px 8px var(--brand-color);
+
+    @include v.bp992 {
+      font-size: 40px;
+    }
+
+    @include v.bp1200 {
+      font-size: 60px;
+    }
   }
 
   &__page-subtitle {
@@ -103,8 +150,16 @@
 
   &__case-strong {
     text-shadow: 0px 1px 8px var(--red-color);
-    font-size: 30px;
+    font-size: 18px;
     font-weight: 700;
+
+    @include v.bp992 {
+      font-size: 24px;
+    }
+
+    @include v.bp1200 {
+      font-size: 30px;
+    }
   }
 
   &__case-desc {
@@ -116,7 +171,15 @@
   &__checklist-list {
     display: grid;
     gap: 6px;
-    font-size: 24px;
+    font-size: 14px;
+
+    @include v.bp992 {
+      font-size: 18px;
+    }
+
+    @include v.bp1200 {
+      font-size: 24px;
+    }
   }
 
   &__case-item {
@@ -149,18 +212,42 @@
   }
 
   &__example-title {
-    font-size: 30px;
+    font-size: 18px;
+
+    @include v.bp992 {
+      font-size: 24px;
+    }
+
+    @include v.bp1200 {
+      font-size: 30px;
+    }
   }
 
   &__example-description {
-    font-size: 24px;
+    font-size: 14px;
+
+    @include v.bp992 {
+      font-size: 18px;
+    }
+
+    @include v.bp1200 {
+      font-size: 24px;
+    }
   }
 
   &__example-items {
     display: grid;
     justify-items: center;
     gap: 10px;
-    font-size: 24px;
+    font-size: 14px;
+
+    @include v.bp992 {
+      font-size: 18px;
+    }
+
+    @include v.bp1200 {
+      font-size: 24px;
+    }
   }
 
   &__example-item {
@@ -187,15 +274,27 @@
   }
 
   &__example-strong {
-    font-size: 30px;
+    font-size: 18px;
     text-shadow: 0 0 8px var(--black-color);
+
+    @include v.bp992 {
+      font-size: 24px;
+    }
+
+    @include v.bp1200 {
+      font-size: 30px;
+    }
   }
 
   &__example-desc {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--orange-color);
     text-shadow: 0 0 8px var(--black-color);
+
+    @include v.bp992 {
+      font-size: 16px;
+    }
   }
 
   &__example-button {
@@ -237,7 +336,16 @@
   }
 
   &__resources-item {
-    font-size: 20px;
+    font-size: 14px;
+
+    @include v.bp992 {
+      font-size: 16px;
+    }
+
+    @include v.bp1200 {
+      font-size: 20px;
+    }
+
     a {
       color: var(--secondary-brand-color);
       text-decoration: none;
@@ -255,7 +363,15 @@
   }
 
   &__final-title {
-    font-size: 30px;
+    font-size: 18px;
     font-weight: 700;
+
+    @include v.bp992 {
+      font-size: 24px;
+    }
+
+    @include v.bp1200 {
+      font-size: 30px;
+    }
   }
 }

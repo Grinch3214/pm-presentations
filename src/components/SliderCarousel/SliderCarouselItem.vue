@@ -1,12 +1,30 @@
 <template>
   <div class="slide" :class="classList">
     <!-- Title slide -->
+    <!-- TODO: Title slide need to separate -->
     <template v-if="slide.type === 'title'">
-      <div class="slide__page">
-        <h1 class="slide__page-title">{{ slide.title }}</h1>
-        <h2 class="slide__page-subtitle subtitle" v-if="slide.subtitle">{{ slide.subtitle }}</h2>
+      <div class="slide__page slide__page--title">
+        <div class="slide__title-content">
+          <h1 class="slide__page-title">{{ slide.title }}</h1>
+          <h2 class="slide__page-subtitle subtitle" v-if="slide.subtitle">
+            {{ slide.subtitle }}
+          </h2>
+        </div>
+
+        <div class="slide__author" v-if="slide.author">
+          <div class="slide__author-photo">
+            <img v-if="slide.author.photo" :src="slide.author.photo" :alt="slide.author.name" />
+          </div>
+          <div class="slide__author-info">
+            <p class="slide__author-name">{{ slide.author.name }}</p>
+            <p class="slide__author-role">{{ slide.author.role }}</p>
+            <p class="slide__author-exp">{{ slide.author.experience }}</p>
+            <p>LinkedIn / GitHub</p>
+          </div>
+        </div>
       </div>
     </template>
+    <!-- TODO: end -->
 
     <!-- Content slide -->
     <template v-else-if="slide.type === 'content'">

@@ -1,13 +1,12 @@
 <template>
   <div class="hero">
-    <!-- TODO: Need to refactor classes and use scoped -->
     <div class="hero__content">
       <h1 class="hero__content-title">{{ slide.title }}</h1>
       <h2 class="hero__content-subtitle subtitle" v-if="slide.subtitle">
         {{ slide.subtitle }}
       </h2>
     </div>
-
+    <!-- TODO: Need to refactor author section (use as component) -->
     <div class="hero__author" v-if="slide.author">
       <div class="hero__author-photo">
         <img v-if="slide.author.photo" :src="slide.author.photo" :alt="slide.author.name" />
@@ -78,9 +77,14 @@ const socialsWithDecor = computed(() => {
 .hero {
   &__content {
     display: grid;
-    align-content: start;
+    align-content: end;
     gap: 20px;
-    padding-top: 20vh;
+    padding-top: 8vh;
+
+    @include v.bp1200 {
+      align-content: start;
+      padding-top: 20vh;
+    }
   }
 
   &__content-title {
@@ -103,19 +107,32 @@ const socialsWithDecor = computed(() => {
   }
 
   &__author {
-    position: absolute;
-    bottom: 10vh;
-    right: 7vw;
+    padding-bottom: 10vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+
+    @include v.bp1200 {
+      position: absolute;
+      bottom: 10vh;
+      right: 7vw;
+      padding-bottom: 0;
+    }
   }
 
   &__author-photo {
-    width: 200px;
-    height: 200px;
+    width: 90px;
+    height: 90px;
     margin: 0 auto 20px;
     overflow: hidden;
     border-radius: 50%;
     border: 4px solid var(--brand-color);
     box-shadow: 0px 0px 4px var(--white-color);
+
+    @include v.bp1200 {
+      width: 200px;
+      height: 200px;
+    }
 
     img {
       width: 100%;
@@ -134,6 +151,7 @@ const socialsWithDecor = computed(() => {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 4px;
+    text-shadow: 0px 0px 4px var(--brand-color);
   }
 
   &__author-role {

@@ -527,7 +527,7 @@ export const useSlideStore = defineStore('slideStore', () => {
       title: 'Інструменти, які PM має знати',
       bullets: [
         'Design: Figma - перевіряти стани, spacing, breakpoints',
-        'Task management: Jira / Linear - структура задач, залежності, епіки',
+        'Task management: Jira / Trello / ClickUp - структура задач, залежності, епіки',
         'API: Swagger / Postman - розуміти контракт, перевіряти ендпоінти',
         'Docs: Confluence / Notion - де живе рішення і чому саме таке',
         'Version control: Git - базово: що таке гілка, PR, merge, revert',

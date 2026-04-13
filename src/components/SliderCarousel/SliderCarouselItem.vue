@@ -1,7 +1,7 @@
 <template>
   <div class="slide" :class="classList">
     <!-- Title slide -->
-    <SlideHero :slide="slide" v-if="slide.type === 'title'" />
+    <SlideHero :slide="slide" v-if="slide.type === 'title'" class="slide__page" />
     <!-- Content slide -->
     <template v-else-if="slide.type === 'content'">
       <div class="slide__content">

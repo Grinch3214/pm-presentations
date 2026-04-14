@@ -1,13 +1,7 @@
 <template>
   <div class="slide" :class="classList">
     <!-- Title slide -->
-    <template v-if="slide.type === 'title'">
-      <div class="slide__page">
-        <h1 class="slide__page-title">{{ slide.title }}</h1>
-        <h2 class="slide__page-subtitle subtitle" v-if="slide.subtitle">{{ slide.subtitle }}</h2>
-      </div>
-    </template>
-
+    <SlideHero :slide="slide" v-if="slide.type === 'title'" class="slide__page" />
     <!-- Content slide -->
     <template v-else-if="slide.type === 'content'">
       <div class="slide__content">
@@ -198,6 +192,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Slide } from '@/types/slider'
+import SlideHero from '../Slide/SlideHero.vue'
 
 const props = defineProps<{
   slide: Slide

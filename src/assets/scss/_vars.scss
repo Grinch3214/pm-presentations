@@ -10,6 +10,7 @@
 
 $breakpoint-sm: 992px;
 $breakpoint-md: 1200px;
+$breakpoint-lg: 1360px;
 
 @mixin bp992 {
   @media (min-width: $breakpoint-sm) {
@@ -19,6 +20,12 @@ $breakpoint-md: 1200px;
 
 @mixin bp1200 {
   @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin bp1360 {
+  @media (min-width: $breakpoint-lg) {
     @content;
   }
 }

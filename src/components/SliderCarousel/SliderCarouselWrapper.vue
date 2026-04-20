@@ -24,7 +24,7 @@
           class="custom-nav__tooltip"
           :class="{ 'custom-nav__tooltip--visible': visibleIndex !== null }"
         >
-          {{ visibleIndex !== null ? slideStore.slides[visibleIndex]?.title : '' }}
+          {{ tooltipTitle }}
         </div>
       </nav>
     </template>
@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import 'vue3-carousel/carousel.css'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { Carousel, Slide, type CarouselExposed } from 'vue3-carousel'
 import { useSlideStore } from '@/stores/slider'
 import SliderCarouselItem from './SliderCarouselItem.vue'
@@ -101,6 +101,11 @@ function handleSlideStart(data: CarouselData) {
 function goToSlide(index: number): void {
   carouselRef.value?.slideTo(index)
 }
+
+const tooltipTitle = computed(() => {
+  if (!visibleIndex.value) return ''
+  return slideStore.slides[visibleIndex.value]?.title ?? ''
+})
 
 watch(hoveredIndex, (val) => {
   if (val !== null) {

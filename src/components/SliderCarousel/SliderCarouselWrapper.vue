@@ -103,7 +103,7 @@ function goToSlide(index: number): void {
 }
 
 const tooltipTitle = computed(() => {
-  if (!visibleIndex.value) return ''
+  if (visibleIndex.value === null) return ''
   return slideStore.slides[visibleIndex.value]?.title ?? ''
 })
 

@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+﻿import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Slide } from '../types/slider'
 import authorPhoto from '../assets/img/photo.png'
@@ -18,14 +18,29 @@ export const useSlideStore = defineStore('slideStore', () => {
         photo: authorPhoto,
       },
     },
+
     {
       id: 2,
+      title: 'Що розберемо сьогодні',
+      bullets: [
+        'Як думає фронтенд-розробник: компоненти, стани, адаптивність',
+        'Фронтенд і бекенд: залежності, API, ризики',
+        'Чому "просто" ніколи не просто: оцінки та технічний борг',
+        'AI у продукті та в процесі розробки',
+        'Як PM може допомогти: задачі, комунікація, чеклисти',
+      ],
+      note: 'Мета - не зробити з вас розробника. Мета - говорити з командою однією мовою.',
+      type: 'content',
+    },
+
+    {
+      id: 3,
       title: 'Компонентне мислення',
       bullets: [
         'Інтерфейс складається з компонентів: кнопки, форми, модалки, таблиці',
         'Один компонент використовується в десятках місць одночасно',
         'Зміна компонента = зміна скрізь: і добре, і ризиковано',
-        'Design System - бібліотека компонентів з правилами їх використання',
+        'Design System - спільна мова між дизайнером, PM і розробником: бібліотека компонентів з правилами',
         'Без системи - кожен розробник робить по-своєму, виникає хаос',
       ],
       note: 'Коли PM каже "змінити одне місце" - часто це означає "змінити всюди"',
@@ -33,7 +48,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 3,
+      id: 4,
       title: 'Приклад: Компонент пошуку',
       example: {
         title: 'Search Bar - "просто рядок для введення тексту"',
@@ -45,7 +60,6 @@ export const useSlideStore = defineStore('slideStore', () => {
           'Keyboard nav: стрілки вгору/вниз по результатах, Enter, Escape',
           'Мобілка: клавіатура перекриває результати - треба особлива логіка скролу',
           'Accessibility: aria-live для озвучення нових результатів скрінрідером',
-          'Edge cases: дуже довгий запит, спецсимволи, SQL injection у тексті',
         ],
         conclusion: 'Один "простий рядок" = 2-3 дні розробки + тестування',
       },
@@ -53,20 +67,20 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 4,
+      id: 5,
       title: 'Чому компоненти важливі PM-у',
       bullets: [
-        'Зміна компонента = глобальний вплив: один баг ламає десятки екранів',
-        'Refactoring коштує дорого: "зробіть трохи по-іншому" може бути рефактором',
-        'Storybook / Design System: якщо немає - розробники витрачають час на дублювання',
+        'Refactoring коштує дорого: "зробіть трохи по-іншому" може бути повним переписуванням',
+        'Storybook - живий каталог компонентів: PM може бачити всі стани кожного елемента без запуску проекту',
         'Повторне використання економить час: не треба робити однакові елементи 50 разів',
+        'Один баг у shared-компоненті ламає десятки екранів одночасно',
       ],
       note: 'Питайте розробника: "Це існуючий компонент чи новий?" - це впливає на оцінку',
       type: 'content',
     },
 
     {
-      id: 5,
+      id: 6,
       title: 'Стани інтерфейсу',
       bullets: [
         'Loading - показуємо spinner або skeleton',
@@ -77,27 +91,6 @@ export const useSlideStore = defineStore('slideStore', () => {
         'Offline - інтернету немає взагалі: окремий стан, бо запит навіть не відправляється',
       ],
       type: 'content',
-    },
-
-    {
-      id: 6,
-      title: 'Приклад: Дашборд з аналітикою',
-      example: {
-        title: 'Сторінка з графіками і метриками',
-        description: 'PM бачить один екран. Розробник бачить:',
-        items: [
-          'Loading: кожен графік завантажується окремо - skeleton для кожного блоку',
-          'Partial loading: одні дані прийшли, інші ще завантажуються',
-          'Error на одному графіку: решта сторінки має працювати',
-          'Empty: у новому акаунті даних ще немає - онбординг-повідомлення',
-          'Фільтри: зміна діапазону дат перезапускає всі запити одночасно',
-          'Realtime: деякі метрики оновлюються кожні 30 секунд',
-          'Export: завантаження CSV/PNG з графіка',
-          'Timezone: дати мають враховувати часовий пояс користувача',
-        ],
-        conclusion: 'Один "екран аналітики" = 3-4 тижні розробки при правильній оцінці',
-      },
-      type: 'example',
     },
 
     {
@@ -119,9 +112,9 @@ export const useSlideStore = defineStore('slideStore', () => {
       bullets: [
         'Мобільна версія ≠ зменшена десктопна: інша логіка взаємодії, touch vs mouse',
         'Mobile-first підхід: починати з мобілки, потім розширювати',
-        'Breakpoints мають бути узгоджені з дизайнером на старті',
-        'Touch targets: мінімум 44×44px - пальці не такі точні, як курсор',
-        'Мобільні користувачі часто на повільному інтернеті: оптимізація критична',
+        'Breakpoints мають бути узгоджені з дизайнером на старті - mobile, tablet, desktop',
+        'Запитайте до старту: "є макети для мобілки?" Якщо немає - задача неповна',
+        "Мобільні користувачі часто на повільному з'єднанні - швидкість завантаження критична",
       ],
       note: 'Якщо в макеті тільки десктоп - це неповний дизайн. Питайте одразу.',
       type: 'content',
@@ -137,7 +130,7 @@ export const useSlideStore = defineStore('slideStore', () => {
           'Меню-бургер: нова компонента, нова анімація, нова логіка',
           'Форми не вміщуються: дизайнер не рахував мобільний контекст',
           'Зламався drag-and-drop: на touch він зовсім інший',
-          'Таблиця з 8 колонками на 375px - неможливо без переосмислення',
+          'Таблиця з 8 колонками на мобільному екрані - неможливо без переосмислення',
         ],
         lesson:
           'Mobile-first з першого дня економить 50% часу. Інтегруйте адаптивність в Definition of Done.',
@@ -167,7 +160,7 @@ export const useSlideStore = defineStore('slideStore', () => {
         'Фронтенд не зберігає дані - все через API (HTTP запити до сервера)',
         'Будь-яка зміна формату відповіді API = зміна коду фронтенду',
         'HTTP статуси: 200 (OK), 400 (помилка запиту), 401 (не авторизований), 500 (сервер впав)',
-        'CORS: браузер блокує запити між різними доменами',
+        'Синхронізація релізів: фронтенд і бекенд можуть деплоїтись незалежно - потрібна координація',
         'Синхронізація роадмапів: якщо бекенд запізнюється - фронтенд чекає або імітує',
       ],
       note: 'Роадмапи фронтенду і бекенду мають бути синхронізовані. Перевіряйте залежності на планінгу.',
@@ -185,7 +178,7 @@ export const useSlideStore = defineStore('slideStore', () => {
           'Response: { data: Order[], total: number, page: number }',
           'Коди помилок і їх значення: 404 = замовлення не знайдено, 403 = немає доступу',
           'Nullable поля: чи може user.avatar бути null? Як відображати?',
-          'Пагінація: cursor-based чи offset? Це впливає на UI',
+
           'Версіювання: /api/v1 vs /api/v2 - коли і чому',
           'Документація: Swagger/OpenAPI - живий контракт, не Word-файл',
         ],
@@ -226,7 +219,6 @@ export const useSlideStore = defineStore('slideStore', () => {
           'Empty state для кожної комбінації: "Товарів у цій категорії немає"',
           'Reset: кнопка скидання - скидати всі чи по одному?',
           'Мобілка: фільтри в drawer/modal, а не sidebar',
-          'Збереження: чи зберігати вибрані фільтри між сесіями?',
           'Loading: показувати skeleton під час кожного запиту',
         ],
         conclusion: 'Оцінка: 4-6 днів, а не "пів дня"',
@@ -256,26 +248,6 @@ export const useSlideStore = defineStore('slideStore', () => {
 
     {
       id: 16,
-      title: 'Приклад: Модалка підтвердження видалення',
-      example: {
-        title: 'Видалити запис - "одна кнопка і підтвердження"',
-        description: 'Що насправді треба врахувати:',
-        items: [
-          'Що саме видаляється? Текст модалки залежить від контексту (товар, замовлення, акаунт)',
-          'Незворотня дія? Треба явне попередження, може double-confirmation',
-          'Cascading delete: видалення замовлення видаляє позиції, файли, коментарі?',
-          'Стан завантаження: кнопка "Видалити" під час запиту - disabled + spinner',
-          'Помилка сервера: модалка залишається відкритою, показуємо повідомлення',
-          'Успіх: модалка закривається, рядок зникає з таблиці (або редірект?)',
-          'Keyboard: Enter підтверджує, Escape скасовує - чи навпаки для небезпечних дій?',
-        ],
-        conclusion: 'Продумайте всі сценарії в ТЗ - розробник не має гадати',
-      },
-      type: 'example',
-    },
-
-    {
-      id: 17,
       title: 'Продуктивність і оптимізація',
       bullets: [
         'Lazy loading: завантажувати код і зображення тільки коли вони потрібні',
@@ -290,7 +262,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 18,
+      id: 17,
       title: 'Кейс №5: "Додайте пагінацію"',
       case: {
         situation:
@@ -310,27 +282,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 19,
-      title: 'Приклад: Вплив продуктивності на бізнес',
-      example: {
-        title: 'Швидкість сайту = конверсія',
-        description: 'Реальна статистика:',
-        items: [
-          'Amazon: +100ms затримки = -1% продажів',
-          'Google: +500ms = -20% пошукових запитів',
-          '53% мобільних користувачів покидають сайт при завантаженні > 3 секунд',
-          'Pinterest: -40% load time = +15% реєстрацій',
-          'Core Web Vitals від Google впливають на SEO-рейтинг',
-          'Ціль: Lighthouse score 90+, LCP < 2.5s, CLS < 0.1',
-        ],
-        conclusion:
-          'Продуктивність - це не технічна деталь, це бізнес-показник. Включайте в definition of done.',
-      },
-      type: 'example',
-    },
-
-    {
-      id: 20,
+      id: 18,
       title: 'Технічний борг',
       bullets: [
         'Що це: "швидкі" рішення зараз, які потребують переробки пізніше',
@@ -344,7 +296,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 21,
+      id: 19,
       title: 'Приклад: Вартість технічного боргу',
       example: {
         title: 'Як борг сповільнює команду',
@@ -364,7 +316,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 22,
+      id: 20,
       title: 'Testing - чому це не "витрата часу"',
       bullets: [
         'Unit тести: перевірка окремих функцій (чи правильно рахується знижка?)',
@@ -378,7 +330,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 23,
+      id: 21,
       title: 'Кейс №6: "Виправте швидко на проді"',
       case: {
         situation: 'PM просить "швиденько поправити текст на продакшені, це ж 30 секунд"',
@@ -387,7 +339,7 @@ export const useSlideStore = defineStore('slideStore', () => {
           '2. Внести зміну, написати commit message',
           '3. Прогнати тести - навіть для правки тексту (а раптом зачепили щось?)',
           "4. Code review - обов'язково, навіть для одного рядка",
-          '5. Deploy на staging, перевірити вручну',
+          '5. Deploy на staging (тестовий сервер), перевірити вручну',
           '6. Deploy на production, моніторинг 15 хвилин',
           '7. Merge назад в develop і main',
           'Реальний час: 1-2 години мінімум',
@@ -398,7 +350,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 24,
+      id: 22,
       title: 'Accessibility (A11Y) - доступність',
       bullets: [
         'Semantic HTML: <button>, <nav>, <main> замість <div> з onclick',
@@ -413,21 +365,21 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 25,
+      id: 23,
       title: 'Чому оцінки не збігаються',
       bullets: [
         'PM бачить: "додати кнопку" - 1 година',
         'Розробник бачить: компонент + логіка + API + помилки + адаптивність + тести + review',
         'Це 18-20 годин при правильному обліку всього',
         'Оцінка без контексту - це здогадка, не прогноз',
-        'Story points і T-shirt sizes допомагають говорити про відносну складність',
+        "Planning Poker / Story Points - спільна оцінка відносної складності, не нав'язана зверху",
       ],
       note: "Оцінка - це прогноз на основі поточних знань, а не зобов'язання. Нові деталі змінюють оцінку.",
       type: 'content',
     },
 
     {
-      id: 26,
+      id: 24,
       title: 'Приклад: Що входить в оцінку фічі',
       example: {
         title: '"Додати форму зворотного зв\'язку"',
@@ -451,7 +403,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 27,
+      id: 25,
       title: 'Як PM має ставити задачі',
       bullets: [
         'User Story: WHO + WHAT + WHY ("Як користувач, я хочу... щоб...")',
@@ -466,7 +418,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 28,
+      id: 26,
       title: 'Приклад: Acceptance Criteria',
       example: {
         title: 'Форма логіна - критерії прийняття',
@@ -486,7 +438,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 29,
+      id: 27,
       title: 'Кейс №7: PM як блокер',
       case: {
         situation: 'CEO щодня приходить зі "швидкими ідеями" - і PM їх одразу передає в команду',
@@ -504,7 +456,7 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
-      id: 30,
+      id: 28,
       title: 'Кейс №8: PM як партнер',
       case: {
         situation: 'Розробник каже: "Ця фіча технічно складна, займе 2 тижні"',
@@ -523,16 +475,45 @@ export const useSlideStore = defineStore('slideStore', () => {
     },
 
     {
+      id: 29,
+      title: 'AI-функції у продукті - що це означає для фронтенду',
+      bullets: [
+        'Streaming: AI відповідає потоком даних, а не одним блоком - UI має показувати текст "по мірі надходження"',
+        'Latency: 2–10 секунд очікування - потрібен окремий UX: typing indicator, skeleton, cancel',
+        'Hallucinations: вивід AI може бути некоректним - потрібен sanitize і попередження у UI',
+        'Token cost: "безлімітний чат" - це рахунок на тисячі доларів без rate-limiting',
+        'Error handling: AI-endpoint може timeout-нути - потрібен graceful fallback',
+        'History: контекст розмови треба зберігати і передавати - це окрема логіка стану',
+      ],
+      note: '"Додати AI-чат" - це не 2 дні. Це окрема архітектура зі своїми станами і ризиками.',
+      type: 'content',
+    },
+
+    {
+      id: 30,
+      title: 'AI в процесі розробки - що PM має знати',
+      bullets: [
+        'Cursor / GitHub Copilot прискорюють написання шаблонного коду, але не замінюють архітектурні рішення',
+        'AI генерує баги і технічний борг - code review стає важливішим, не менш важливим',
+        'Оцінки не зменшуються вдвічі: AI допомагає з рутиною, але не з складними задачами',
+        'Тести, QA, deployment - AI їх не замінює, лише допомагає писати',
+        'Claude Code, Copilot - інструмент розробника, а не множник швидкості у вашому плані спринту',
+      ],
+      note: 'Не кажіть: "У вас же є Copilot, чому так довго?" - це як "у вас є калькулятор, чому бухгалтерія так довго?"',
+      type: 'content',
+    },
+
+    {
       id: 31,
       title: 'Інструменти, які PM має знати',
       bullets: [
         'Design: Figma - перевіряти стани, spacing, breakpoints',
-        'Task management: Jira / Trello / ClickUp - структура задач, залежності, епіки',
+        'Task management: Jira / Linear / ClickUp - структура задач, залежності, епіки',
         'API: Swagger / Postman - розуміти контракт, перевіряти ендпоінти',
         'Docs: Confluence / Notion - де живе рішення і чому саме таке',
-        'Version control: Git - базово: що таке гілка, PR, merge, revert',
         'Analytics: Amplitude / Mixpanel - чи фіча реально використовується',
         'Monitoring: Sentry - скільки JS помилок летить з вашої фічі',
+        'AI tools: Cursor / GitHub Copilot - розуміти, що це не "автоматична розробка"',
       ],
       note: 'Не треба бути експертом. Треба знати, навіщо кожен інструмент і як читати результати.',
       type: 'content',
@@ -567,6 +548,7 @@ export const useSlideStore = defineStore('slideStore', () => {
         '✅ Accessibility враховано (keyboard, screen reader, контраст)',
         "✅ Оцінка узгоджена з розробниками (не нав'язана зверху)",
         '✅ Plan тестування є (unit, e2e, manual QA)',
+        '✅ AI-вимоги описані, якщо фіча використовує AI (streaming, fallback, rate limiting)',
       ],
       type: 'checklist',
     },
@@ -597,6 +579,7 @@ export const useSlideStore = defineStore('slideStore', () => {
         '🚩 "Без тестів, щоб швидше" - технічний борг і баги на проді',
         '🚩 "Виправте на проді" - без процесу, ризик нових поломок',
         '🚩 "Бекенд ще не готовий, але почніть" - ризик переробки після злиття',
+        '🚩 "У вас же є Copilot/AI, чому так довго?" - AI не замінює архітектуру і QA',
         '🚩 Зміна пріоритетів без пояснення команді - демотивація і хаос',
       ],
       note: 'Якщо чуєте або самі кажете ці фрази - зупиніться і задайте питання',
@@ -623,12 +606,12 @@ export const useSlideStore = defineStore('slideStore', () => {
       id: 37,
       title: 'Метрики успіху фронтенду',
       bullets: [
-        'Core Web Vitals: LCP < 2.5s, CLS < 0.1, INP < 200ms (Google)',
+        'Core Web Vitals (метрики Google): LCP - час завантаження < 2.5s, CLS - стрибки елементів < 0.1, INP - реакція на дію < 200ms',
         'Page Load Time: < 3 секунди для більшості користувачів',
         'Lighthouse score: 90+ для production',
         'Error rate: JS-помилок на проді - прагнути до мінімуму (Sentry)',
-        'Bundle size: < 200KB стиснутого JS для першого завантаження',
-        'Accessibility score: WCAG AA compliance',
+        'Bundle size: мінімізувати початкове завантаження, решту - lazy load',
+        'Accessibility score: відповідність стандарту доступності WCAG AA (мінімальний рівень для більшості продуктів)',
       ],
       note: 'Те, що вимірюємо - те й покращуємо. Включайте ці метрики в Definition of Done.',
       type: 'content',
@@ -656,8 +639,8 @@ export const useSlideStore = defineStore('slideStore', () => {
         '<a href="https://developer.mozilla.org/" target="_blank" rel="noreferrer">MDN Web Docs</a> - найкраща документація по web технологіям',
         '<a href="https://web.dev/" target="_blank" rel="noreferrer">web.dev</a> - гайди від Google по продуктивності та best practices',
         '<a href="https://www.nngroup.com/" target="_blank" rel="noreferrer">Nielsen Norman Group</a> - дослідження UX і юзабіліті',
-        '<a href="https://stateofjs.com/" target="_blank" rel="noreferrer">State of JS</a> - щорічний звіт про тренди в JavaScript',
-        '<a href="https://www.smashingmagazine.com/" target="_blank" rel="noreferrer">Smashing Magazine</a> - web design, UX, frontend',
+        '<a href="https://www.lennysnewsletter.com/" target="_blank" rel="noreferrer">Lenny\'s Newsletter</a> - найпопулярніший PM-ресурс: продукт, метрики, процеси',
+        '<a href="https://learnprompting.org/" target="_blank" rel="noreferrer">Learn Prompting</a> - як ефективно працювати з AI: корисно для PM-а',
         '<a href="https://basecamp.com/shapeup" target="_blank" rel="noreferrer">Shape Up</a> - методологія від Basecamp про роботу з командою',
         '<a href="https://scrumguides.org/" target="_blank" rel="noreferrer">Scrum Guide</a> - офіційний гайд по Scrum',
       ],

@@ -355,6 +355,8 @@
   &__final-title {
     font-size: 18px;
     font-weight: 700;
+    margin-block-start: 20px;
+    order: 1;
 
     @include v.bp992 {
       font-size: 24px;

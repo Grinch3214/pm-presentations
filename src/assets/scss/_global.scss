@@ -7,7 +7,7 @@ body {
 #app {
   position: relative;
   background:
-    linear-gradient(to bottom, rgba(0, 55, 138, 0.8), rgba(0, 0, 0, 0.8)),
+    linear-gradient(to bottom, rgb(0 55 138 / 0.8), rgb(0 0 0 / 0.8)),
     url('@/assets/img/offline-homepage-splash-1680@2x.webp') no-repeat center/cover;
 
   @include v.bp1200 {

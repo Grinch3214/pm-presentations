@@ -13,7 +13,7 @@ export const useSlideStore = defineStore('slideStore', () => {
       type: 'title',
       author: {
         name: 'Максим Грічіна',
-        role: 'Frontend Developer · Jaffle',
+        role: 'Frontend Developer · InsulaLabs',
         experience: '6 років будую інтерфейси і працюю з PM-ами - знаю болі з обох сторін',
         photo: authorPhoto,
       },
